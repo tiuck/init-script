@@ -1,11 +1,12 @@
 #!/bin/bash
 blue=`tput setaf 6`
-red= `tput setaf 1`
+red=`tput setaf 1`
 reset=`tput sgr0`
 function e {
 echo ${blue} $1 ${reset}
 }
 function a {
+echo ""
 echo ${red} $1 ${reset}
 }
 
@@ -59,27 +60,29 @@ case $networkconfig in
 		read -p "Choose wisely: " ipchange
 		case $ipchange in
 		 1) sudo cp /etc/network/interfaces /etc/network/interfaces.bak
-			echo 'auto eth0
+		 e "Writing the following to /etc/network/interfaces"
+		echo 'auto eth0
 iface eth0 inet static
 address 192.168.1.112
 netmask 255.255.255.0
-gateway 192.168.1.1' > /etc/network/interfaces ;;
+gateway 192.168.1.1' | sudo tee /etc/network/interfaces ;;
 		 2) read -p "Enter IP (192.168.1.???): " ip 
 			 sudo cp /etc/network/interfaces /etc/network/interfaces.bak
 			echo "auto eth0
 iface eth0 inet static
 address 192.168.1.$ip
 netmask 255.255.255.0
-gateway 192.168.1.1" > /etc/network/interfaces;;
+gateway 192.168.1.1" | sudo tee /etc/network/interfaces ;;
 		3)  read -p "Enter IP (e.g. 192.168.1.2): " ip
 			read -p "Enter Gateway IP Address: " gateway
 			read -p "Enter Ethernet Device (e.g. eth0): " device
 			sudo cp /etc/network/interfaces /etc/network/interfaces.bak
+			e "Writing the following to /etc/network/interfaces"
                         echo "auto $device
 iface $device inet static
 address $ip
 netmask 255.255.255.0
-gateway $gateway" > /etc/network/interfaces;;
+gateway $gateway" | sudo tee /etc/network/interfaces ;;
  
 		*) e "No valid choice" ;;
 		esac;;
