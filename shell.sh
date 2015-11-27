@@ -32,8 +32,7 @@ a "Download .bashrc? [y/n] "
 read -p " " yn
 case $yn in
 	y) mv .bashrc .bak-bashrc  && wget http://mindnugget.com/bashrc/.bashrc && wget http://mindnugget.com/bashrc/.bashrc_help;;
-	*) e "No external .bashrc" ;;
-	esac
+	*) e "No external .bashrc" 
 
 a "Setup .bashrc..."
 echo "mcd() { mkdir \"$1\"; cd \"$1\"; }
@@ -43,12 +42,29 @@ alias ..=cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-alias i='sudo apt-get install'
-bak(){ mv \"$1\" \"$1.bak\"; cp \"$2\" \"$1\"; }" >> .bashrc
+bak(){ mv \"$1\" \"$1.bak\"; cp \"$2\" \"$1\"; }" >> .bashrc;;
+esac
+echo "alias i='sudo apt-get install'" >> .bashrc
+
 source .bashrc
 
+a "Install Raspberry Pi specific software? [y/n] "
+read -p "" yn
+case $yn in
+	y) curl -sLS https://apt.adafruit.com/add | sudo bash
+sudo apt-get install -y wicd-curses
+wget http://nodejs.org/dist/v0.10.5/node-v0.10.5-linux-arm-pi.tar.gz
+cd /usr/local
+sudo tar xzvf ~/node-v0.10.5-linux-arm-pi.tar.gz --strip=1
+export PATH=$PATH:/usr/local/bin/node
+cd ~
+echo "export PATH=$PATH:/usr/local/bin/node" >> .profile
+sudo npm install -g n
+node -v;;
+	*) e "Not installing Raspberry Pi specific stuff";; 
+esac
 
-inst wicd-curses
+
 
 a "Install...."
 inst "ncdu \
@@ -62,7 +78,7 @@ e "2: sudo yum -y update"
 e "3: do nothing"
 read -p "" yn
 case $yn in
- 1) sudo apt-get update ;;
+ 1) sudo apt-get -y update ;;
  2) sudo yum -y update ;;
  *) ;;
 esac 
