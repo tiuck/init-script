@@ -50,18 +50,40 @@ a "Network Config"
 e "1: Debian-style (/etc/network/interfaces)"
 e "2: Redhat-style (/etc/sysconfig/network-scripts/ifcfg-ethX)"
 e "No network config"
-read -p "Choose wisely: " network-config
-case $network-config in
+read -p "Choose wisely: " networkconfig
+case $networkconfig in
 	1)
 		e "1: add 192.168.1.112 (gateway 192.168.1.1) on eth0"
 		e "2: add 192.168.1.??? (gateway 192.168.1.1) on eth0"
 		e "3: manual config"
-		read -p "Choose wisely: " ip-change
-		case $ip-change in
-		 1) sudo apt-get update ;;
-		 2) sudo yum -y update ;;
-		 *) ;;
+		read -p "Choose wisely: " ipchange
+		case $ipchange in
+		 1) sudo cp /etc/network/interfaces /etc/network/interfaces.bak
+			echo 'auto eth0
+iface eth0 inet static
+address 192.168.1.112
+netmask 255.255.255.0
+gateway 192.168.1.1' > /etc/network/interfaces ;;
+		 2) read -p "Enter IP (192.168.1.???): " ip 
+			 sudo cp /etc/network/interfaces /etc/network/interfaces.bak
+			echo "auto eth0
+iface eth0 inet static
+address 192.168.1.$ip
+netmask 255.255.255.0
+gateway 192.168.1.1" > /etc/network/interfaces;;
+		3)  read -p "Enter IP (e.g. 192.168.1.2): " ip
+			read -p "Enter Gateway IP Address: " gateway
+			read -p "Enter Ethernet Device (e.g. eth0): " device
+			sudo cp /etc/network/interfaces /etc/network/interfaces.bak
+                        echo "auto $device
+iface $device inet static
+address $ip
+netmask 255.255.255.0
+gateway $gateway" > /etc/network/interfaces;;
+ 
+		*) e "No valid choice" ;;
 		esac;;
-	
+	2)	e "Not yet implemented";;
+	*)	e "Ok, no change in network config"
 		
 	esac
