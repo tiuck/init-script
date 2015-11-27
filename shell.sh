@@ -9,6 +9,14 @@ function a {
 echo ""
 echo ${red} $1 ${reset}
 }
+function inst {
+a "Install $1? [y/n]"
+read -p " " yn
+case $yn in
+ y) sudo apt-get install -y $1;;
+ *) e "Not installing $1...";;
+esac
+}
 
 
 
@@ -20,9 +28,10 @@ export EDITOR" >> .profile
 source .profile
 
 a "Download .bashrc? [y/n] "
+# See http://www.linuxquestions.org/questions/linux-general-1/ultimate-prompt-and-bashrc-file-4175518169/
 read -p " " yn
 case $yn in
-	yY) mv .bashrc .bak-bashrc  && wget http://mindnugget.com/bashrc/.bashrc && wget http://mindnugget.com/bashrc/.bashrc_help;;
+	y) mv .bashrc .bak-bashrc  && wget http://mindnugget.com/bashrc/.bashrc && wget http://mindnugget.com/bashrc/.bashrc_help;;
 	*) e "No external .bashrc" ;;
 	esac
 
@@ -39,17 +48,19 @@ bak(){ mv \"$1\" \"$1.bak\"; cp \"$2\" \"$1\"; }" >> .bashrc
 source .bashrc
 
 
+inst wicd-curses
 
 a "Install...."
-sudo apt-get install ncdu \
+inst "ncdu \
 git \
 wget \
-unzip 
+unzip "
 
 a "Update System?"
 e "1: sudo apt-get -y update"
 e "2: sudo yum -y update"
-read -p "3: do nothing " yn
+e "3: do nothing"
+read -p "" yn
 case $yn in
  1) sudo apt-get update ;;
  2) sudo yum -y update ;;
