@@ -18,12 +18,26 @@ echo "set nocompatible" > .vimrc
 echo "EDITOR=vi
 export EDITOR" >> .profile
 source .profile
+
+a "Download .bashrc? [y/n] "
+read -p " " yn
+case $yn in
+	yY) mv .bashrc .bak-bashrc  && wget http://mindnugget.com/bashrc/.bashrc && wget http://mindnugget.com/bashrc/.bashrc_help;;
+	*) e "No external .bashrc" ;;
+	esac
+
 a "Setup .bashrc..."
 echo "mcd() { mkdir \"$1\"; cd \"$1\"; }
 mccd() { mkdir -P \"$1\"; cd \"$1\"; }
 alias ll='ls -ahl'
+alias ..=cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias i='sudo apt-get install'
 bak(){ mv \"$1\" \"$1.bak\"; cp \"$2\" \"$1\"; }" >> .bashrc
 source .bashrc
+
 
 
 a "Install...."
