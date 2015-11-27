@@ -10,11 +10,15 @@ echo ${blue} $1 ${reset}
 cd ~
 e "Setup .vimrc..."
 echo "set nocompatible" > .vimrc
+echo "EDITOR=vi
+export EDITOR" >> .profile
+source .profile
 e "Setup .bashrc..."
 echo "mcd() { mkdir \"$1\"; cd \"$1\"; }
 mccd() { mkdir -P \"$1\"; cd \"$1\"; }
 alias ll='ls -ahl'
 bak(){ mv \"$1\" \"$1.bak\"; cp \"$2\" \"$1\"; }" >> .bashrc
+source .bashrc
 
 
 e "Install...."
