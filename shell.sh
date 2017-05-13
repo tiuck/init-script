@@ -93,7 +93,7 @@ case $yn in
  sudo rm /etc/ssh/ssh_host_*
  sudo dpkg-reconfigure openssh-server
  sudo service ssh restart
- ; ;
+ ;;
  *) ;;
 esac 
 
@@ -103,7 +103,7 @@ mkdir .ssh
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAimIvph2gT6wudQGlyWKIcP/m3RZa+mMzapdRQwTwSbdFtSl2LnL7NvMK4JDLweNc8KX3YyMyJQb0XeyHGWgG0Mc5Wd3rOAblW/uOHd6vzaHlDUFIldxwd9ibVShTIc/HAdKqlxqt8DbXN2pBLw75uFLvMaxCzfte7kyz9ALfF63xgWBqGKIC/6woFJWIuByvCZtDBN3gwf6scXQwtHWTBEXH3wpOf2+47faoKD1L7y0D7lYtBENkBYq7QJb9uUO7HMAa7d5WR5hPniwpySfg3Jp5AqM89ZVuQHfuzN4k/PpE1XnL2I1eNS7CntvU5l4lCnabF402ytGEhpNPybUVAQ== rsa-key-20151122" > .ssh/authorized_keys2
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAimIvph2gT6wudQGlyWKIcP/m3RZa+mMzapdRQwTwSbdFtSl2LnL7NvMK4JDLweNc8KX3YyMyJQb0XeyHGWgG0Mc5Wd3rOAblW/uOHd6vzaHlDUFIldxwd9ibVShTIc/HAdKqlxqt8DbXN2pBLw75uFLvMaxCzfte7kyz9ALfF63xgWBqGKIC/6woFJWIuByvCZtDBN3gwf6scXQwtHWTBEXH3wpOf2+47faoKD1L7y0D7lYtBENkBYq7QJb9uUO7HMAa7d5WR5hPniwpySfg3Jp5AqM89ZVuQHfuzN4k/PpE1XnL2I1eNS7CntvU5l4lCnabF402ytGEhpNPybUVAQ== rsa-key-20151122" > .ssh/authorized_keys
 chmod 700 .ssh
-chmod 600 .ssh/authorized_keys*s
+chmod 600 .ssh/authorized_key*
 
 a "Network Config"
 e "1: Debian-style (/etc/network/interfaces)"
